@@ -1,0 +1,74 @@
+---
+## General pipeline parameters:
+
+# Name of the pipeline:
+pipeline: "pipeline-pinfish-analysis_dros"
+# ABSOLUTE path to directory holding the working directory:
+workdir_top: "Workspaces"
+# Repository URL:
+repo: "https://github.com/nanoporetech/pipeline-pinfish-analysis.git"
+
+## Pipeline-specific parameters:
+
+threads: 50
+
+# Input genome:
+genome_fasta: "Drosophila_melanogaster.BDGP6.dna_sm.toplevel.fa"
+
+# CDNA or direct RNA reads in fastq format:
+reads_fastq: "dros_stranded.fq"
+
+# Extra option passed to minimap2 when generating index:
+minimap_index_opts: "-k14"
+
+# Extra options passed to minimap2:
+#minimap2_opts: ""
+# Enable this for stranded data:
+minimap2_opts: "-uf"
+# Enable this for SIRV data:
+#minimap2_opts: "--splice-flank=no"
+
+# Minmum mapping quality:
+minimum_mapping_quality: 10
+
+# Options passed to spliced_bam2gff:
+#spliced_bam2gff_opts: ""
+# Enable this for stranded data:
+spliced_bam2gff_opts: "-s"
+
+# -c parameter:
+minimum_cluster_size: 10
+
+# -p parameter:
+minimum_isoform_percent: 1.0
+
+# -d parameter:
+exon_boundary_tolerance: 10
+
+# -e parameter:
+terminal_exon_boundary_tolerance: 30
+
+# Extra options passed to minimap2 when mapping polished reads:
+#minimap2_opts_polished: ""
+# Enable this for stranded data:
+minimap2_opts_polished: "-uf"
+# Enable this for SIRV data:
+#minimap2_opts_polished: "--splice-flank=no"
+
+# Options passed to spliced_bam2gff when converting alignments of polished reads:
+#spliced_bam2gff_opts_pol: ""
+# Enable this for stranded data:
+spliced_bam2gff_opts_pol: "-s"
+
+# Options passed to collapse_partials when collapsing fragmentation artifacts
+# in clustered and polished transcripts.
+
+# Internal exon boundary tolerance:
+collapse_internal_tol: 5
+
+# Five prime boundary tolerance:
+collapse_five_tol: 5000
+
+# Three prime boundary tolerance:
+collapse_three_tol: 30
+

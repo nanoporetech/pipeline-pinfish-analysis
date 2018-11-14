@@ -1,0 +1,3 @@
+[submodule "pinfish"]
+	path = pinfish
+	url = https://github.com/nanoporetech/pinfish.git
