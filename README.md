@@ -143,7 +143,7 @@ Intron chain level:    47.5     |    80.3    |
 ```
 ![Dmel plot](https://raw.githubusercontent.com/nanoporetech/pipeline-pinfish-analysis/master/misc/gffcompare_Dmel.png)
 
-5\. Help:
+4\. Help:
 ---------
 
 ## Licence and Copyright:
