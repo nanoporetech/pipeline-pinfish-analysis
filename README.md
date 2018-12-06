@@ -4,23 +4,20 @@
 Pipeline for annotating genomes using long read transcriptomics data with pinfish
 =================================================================================
 
-1\. Introduction:
------------------
-
 [Pinfish](https://github.com/nanoporetech/pinfish) is a collection of tools helping to make sense of long transcriptomics data (long cDNA reads, direct RNA reads). Pinfish is largely inspired by the [Mandalorion](https://www.nature.com/articles/ncomms16027) pipeline. It is meant to provide a quick way for generating annotations from long reads only and it is not meant to provide the same functionality as pipelines using a broader strategy for annotation (such as [LoReAn](https://www.biorxiv.org/content/early/2017/12/08/230359)).
 
 This `snakemake` pipeline runs the pinfish tools to generate GFF2 annotations from a reference genome and input long reads.
 
-2\. Getting Started:
---------------------
+Getting Started
+===============
 
-## Input:
+## Input
 
 - The input reads must be in fastq format. The default parameters in `config.yml` are tuned for stranded data. If your input is unstranded cDNA data, it is recommended to run [pychopper](https://github.com/nanoporetech/pychopper) on the input fastq in order to detect the strandedness of the reads. It is recommended to run `pychopper` for stranded cDNA data as well to select for reads which have both the reverse transcription and the strand switching primer.
 
 - The input genome must be in fasta format.
 
-## Output:
+## Output
 
 The pipeline produces the following output:
 
@@ -35,7 +32,7 @@ The pipeline produces the following output:
 - `results/corrected_transcriptome_polished_collapsed.fas` - The reference corrected transcriptome generated from the input genome and `polished_transcripts_collapsed.gff`.
 - For all practical purposes `results/polished_transcripts_collapsed.gff` is the final output of the pipeline and likely to be the most accurate.
 
-## Depedencies:
+## Depedencies
 
 - [miniconda](https://conda.io/miniconda.html)
 - [snakemake](http://snakemake.readthedocs.io/en/latest/) - easily installed via conda
@@ -53,7 +50,7 @@ The pipeline produces the following output:
 
 
 
-## Installation:
+## Installation
 
 Clone the pipeline and the pinfish toolset by issuing:
 
@@ -61,7 +58,7 @@ Clone the pipeline and the pinfish toolset by issuing:
 git clone --recursive https://github.com/nanoporetech/pipeline-pinfish-analysis.git
 ```
 
-## Usage:
+## Usage
 
 Edit `config.yml` to set the input genome, input fastq and parameters, then issue:
 
@@ -69,8 +66,8 @@ Edit `config.yml` to set the input genome, input fastq and parameters, then issu
 snakemake --use-conda -j <num_cores> all
 ```
 
-3\. Results:
-------------
+Results
+=======
 
 ## Performance on SIRV E0 mix spike-in data
 
@@ -143,10 +140,10 @@ Intron chain level:    47.5     |    80.3    |
 ```
 ![Dmel plot](https://raw.githubusercontent.com/nanoporetech/pipeline-pinfish-analysis/master/misc/gffcompare_Dmel.png)
 
-4\. Help:
----------
+Help
+=====
 
-## Licence and Copyright:
+## Licence and Copyright
 
 (c) 2018 Oxford Nanopore Technologies Ltd.
 
@@ -154,13 +151,13 @@ This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-## FAQs and tips:
+## FAQs and tips
 
 - The [GFF2](https://www.ensembl.org/info/website/upload/gff.html) files can be visualised using [IGV](http://software.broadinstitute.org/software/igv).
 - The GFF2 files can be converted to GFF3 or GTF using the [gffread](https://bioconda.github.io/recipes/gffread/README.html) utility.
 - The [gffcompare](https://github.com/gpertea/gffcompare) tool can be used to compare the results of the pipeline to an existing annotation.
 
 
-## References and Supporting Information:
+## References and Supporting Information
 
 See the post announcing the tool at the Oxford Nanopore Technologies community [here](https://community.nanoporetech.com/posts/new-transcriptomics-analys).
