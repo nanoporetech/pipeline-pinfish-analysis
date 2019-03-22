@@ -10,6 +10,17 @@ SNAKEDIR = path.dirname(workflow.snakefile)
 
 include: "snakelib/utils.snake"
 
+rule dump_versions:
+    output:
+        ver = "versions.txt"
+    conda: "env.yml"
+    shell:"""
+    command -v conda > /dev/null && conda list > {output.ver}
+    echo -e "pinfish/spliced_bam2gff\t" `{SNAKEDIR}/pinfish/spliced_bam2gff/spliced_bam2gff -V` >> {output.ver}
+    echo -e "pinfish/cluster_gff\t" `{SNAKEDIR}/pinfish/cluster_gff/cluster_gff -V` >> {output.ver}
+    echo -e "pinfish/collapse_partials" `{SNAKEDIR}/pinfish/collapse_partials/collapse_partials -V` >> {output.ver}
+    echo -e "pinfish/polish_clusters" `{SNAKEDIR}/pinfish/polish_clusters/polish_clusters -V` >> {output.ver}
+    """
 
 rule build_minimap_index: ## build minimap2 index
     input:
@@ -156,6 +167,7 @@ rule gen_corr_trs: ## Generate corrected transcriptome.
 
 rule all: ## run the whole pipeline
     input:
+        ver = rules.dump_versions.output.ver,
         index = rules.build_minimap_index.output.index,
         aligned_reads = rules.map_reads.output.bam,
         raw_gff = rules.convert_bam.output.raw_gff,
