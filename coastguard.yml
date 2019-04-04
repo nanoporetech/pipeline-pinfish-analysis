@@ -1,0 +1,152 @@
+settings:
+  environ:
+    working_directory: .
+    temporary_directory: ''
+    output_directory: ''
+    custom:
+      Baywatch:
+        name: 'Pinfish'
+        description: |
+            Pipeline for annotating genomes using long read transcriptomics data with pinfish
+        fields:
+        - label: Input genome
+          description: Input genome
+          path: workflow.data.genome_fasta.path
+          fieldType: file
+        - label: cDNA or direct RNA reads in fastq format
+          description: cDNA or direct RNA reads in fastq format
+          path: workflow.data.reads_fastq.path
+          fieldType: file
+        - label: Extra option passed to minimap2 when generating index
+          description: Extra option passed to minimap2 when generating index
+          path: workflow.data.minimap_index_opts.path
+          fieldType: string
+          value: -k14
+        - label: Extra options passed to minimap2
+          description: Extra options passed to minimap2
+          path: workflow.data.minimap2_opts.path
+          fieldType: string
+          value: -uf
+        - label: Minmum mapping quality
+          description: Minmum mapping quality
+          path: workflow.data.minimum_mapping_quality.path
+          fieldType: number
+          value: 10
+        - label: Options passed to spliced_bam2gff
+          description: Options passed to spliced_bam2gff
+          path: workflow.data.spliced_bam2gff_opts.path
+          fieldType: string
+          value: -s
+        - label: Minimum cluster size
+          description: Minimum cluster size
+          path: workflow.data.minimum_cluster_size.path
+          fieldType: number
+          value: 10
+        - label: Internal exon boundary tolerance
+          description: Internal exon boundary tolerance
+          path: workflow.data.exon_boundary_tolerance.path
+          fieldType: number
+          value: 10
+        - label: Terminal exon boundary tolerance
+          description: Terminal exon boundary tolerance
+          path: workflow.data.terminal_exon_boundary_tolerance.path
+          fieldType: number
+          value: 30
+        - label: Extra minimap2 options for mapping polished reads
+          description: Extra minimap2 options for mapping polished reads
+          path: workflow.data.minimap2_opts_polished.path
+          fieldType: string
+          value: -uf
+        - label: Options passed to spliced_bam2gff when converting alignments of polished
+            reads
+          description: Options passed to spliced_bam2gff when converting alignments
+            of polished reads
+          path: workflow.data.spliced_bam2gff_opts_pol.path
+          fieldType: string
+          value: -s
+        - label: Internal exon boundary tolerance for collapsing
+          description: Internal exon boundary tolerance for collapsing
+          path: workflow.data.collapse_internal_tol.path
+          fieldType: number
+          value: 5
+        - label: Five prime boundary tolerance for collapsing
+          description: Five prime boundary tolerance for collapsing
+          path: workflow.data.collapse_five_tol.path
+          fieldType: number
+          value: 5000
+        - label: Three prime boundary tolerance for collapsing
+          description: Three prime boundary tolerance for collapsing
+          path: workflow.data.collapse_three_tol.path
+          fieldType: number
+          value: 30
+        - label: Threads
+          description: Threads
+          path: workflow.data.threads.path
+          fieldType: number
+          value: 50
+workflow:
+  data:
+    genome_fasta:
+      class: File
+      path: ''
+    reads_fastq:
+      class: File
+      path: ''
+    minimap_index_opts: -k14
+    minimap2_opts: -uf
+    minimum_mapping_quality: 10
+    spliced_bam2gff_opts: -s
+    minimum_cluster_size: 10
+    exon_boundary_tolerance: 10
+    terminal_exon_boundary_tolerance: 30
+    minimap2_opts_polished: -uf
+    spliced_bam2gff_opts_pol: -s
+    collapse_internal_tol: 5
+    collapse_five_tol: 5000
+    collapse_three_tol: 30
+    threads: 50
+  steps:
+  - Process:
+      name: 'Pinfish'
+      HostSNK:
+        target: all
+        cores: 5
+        location:
+          class: Directory
+          path: .
+        config_template:
+          class: File
+          path: config.yml
+        inputs:
+        - path: data.genome_fasta
+          confpath: genome_fasta
+          remap: paths
+        - path: data.reads_fastq
+          confpath: reads_fastq
+          remap: paths
+        - path: data.minimap_index_opts
+          confpath: minimap_index_opts
+        - path: data.minimap2_opts
+          confpath: minimap2_opts
+        - path: data.minimum_mapping_quality
+          confpath: minimum_mapping_quality
+        - path: data.spliced_bam2gff_opts
+          confpath: spliced_bam2gff_opts
+        - path: data.minimum_cluster_size
+          confpath: minimum_cluster_size
+        - path: data.exon_boundary_tolerance
+          confpath: exon_boundary_tolerance
+        - path: data.terminal_exon_boundary_tolerance
+          confpath: terminal_exon_boundary_tolerance
+        - path: data.minimap2_opts_polished
+          confpath: minimap2_opts_polished
+        - path: data.spliced_bam2gff_opts_pol
+          confpath: spliced_bam2gff_opts_pol
+        - path: data.collapse_internal_tol
+          confpath: collapse_internal_tol
+        - path: data.collapse_five_tol
+          confpath: collapse_five_tol
+        - path: data.collapse_three_tol
+          confpath: collapse_three_tol
+        - path: data.threads
+          confpath: threads
